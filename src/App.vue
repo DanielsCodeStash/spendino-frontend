@@ -1,28 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+    <Header />
+    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <ChartPanel />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import Header from './header/Header.vue';
+import ChartPanel from './chart/ChartPanel.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
+    Header,
+    ChartPanel,
   },
 };
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+body {
+    background-color: #525252;
+    font-family: 'Courier New',Courier;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
 </style>
