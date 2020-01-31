@@ -6,74 +6,66 @@
 
 <script>
 
-import $ from 'jquery';
-
-window.app = {};
-const app = window.app;
 const d3plus = window.d3plus;
 
 export default {
   name: 'ChartPanel',
+  created() {
+    window.addEventListener('resize', this.onResize);
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.onResize);
+  },
+  data() {
+    return {
+      treemap: new d3plus.Treemap(),
+    };
+  },
   mounted() {
-    this.$root.$on('changeData', (dataFile) => {
-      console.log(dataFile);
-      app.changeData(dataFile);
+    this.$root.$on('changeData', (year, month) => {
+      console.log(`${year}-${month}`);
+      this.changeData(year, month);
     });
-
-    console.log('running mounted');
-
-    $.getJSON('data/201909.json', (json) => {
-      app.treemap = new d3plus.Treemap()
-        .data(json)
+    this.initTreemap();
+    this.onResize();
+  },
+  methods: {
+    initTreemap() {
+      this.treemap
         .groupBy(['g1', 'g2'])
         .select('#graphPanel')
-        .sum('value')
-        .render();
+        .sum('value');
+    },
+    changeData(year, month) {
+      const filename = `data/${year}${month}.json`;
+      this.treemap.data(filename);
+      this.treemap.render();
+    },
+    onResize() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
 
-      app.resizeChart();
-    });
+      document
+        .getElementById('topPanel')
+        .setAttribute('style', 'height: 60 + px');
+
+      document
+        .getElementById('mainPanel')
+        .setAttribute('style', 'padding-left: 10px');
+
+      if (this.treemap) {
+        this.treemap.width(w - 20);
+        this.treemap.height(h - 60 - 50);
+
+        this.treemap.render();
+      }
+    },
   },
   props: {
   },
 };
 
-console.log('running js setup');
-
-app.changeData = (datapath) => {
-  app.treemap.data(datapath);
-  app.treemap.render();
-};
-
-app.resizeChart = () => {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-
-  document
-    .getElementById('topPanel')
-    .setAttribute('style', 'height: 60 + px');
-
-  document
-    .getElementById('mainPanel')
-    .setAttribute('style', 'padding-left: 10px');
-
-  if (app.treemap) {
-    app.treemap.width(w - 20);
-    app.treemap.height(h - 60 - 50);
-
-    app.treemap.render();
-  }
-};
-
-window.addEventListener('load', () => {
-  app.resizeChart();
-});
-
-window.addEventListener('resize', () => {
-  app.resizeChart();
-});
-
 </script>
-
 
 <style scoped>
 

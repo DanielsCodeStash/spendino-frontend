@@ -17,6 +17,12 @@ export default {
     Header,
     ChartPanel,
   },
+  mounted() {
+    this.$nextTick(() => {
+      console.log('Finished rendering the complete view');
+      this.$root.$emit('changeData', 2019, 12);
+    });
+  },
 };
 </script>
 
