@@ -1,19 +1,49 @@
 <template>
 
   <div id="topPanel">
-        <div id="forwardButton1" class="topPanelSquare">-</div>
-        <div id="forwardButton2" class="topPanelSquare">-</div>
-        <div id="forwardButton3" class="topPanelSquare">-</div>
-        <div id="forwardButton4" class="topPanelSquare">-</div>
+        <div id="forwardButton1" v-on:click="setData('201912')" class="topPanelSquare">-</div>
+        <div id="forwardButton2" v-on:click="setData('201911')" class="topPanelSquare">-</div>
+        <div id="forwardButton3" v-on:click="setData('201910')" class="topPanelSquare">-</div>
+        <div id="forwardButton4" v-on:click="setData('201909')" class="topPanelSquare">-</div>
         <div id="activeMonth" class="topPanelSquare"></div>
   </div>
 </template>
 
 <script>
 
+import $ from 'jquery';
+
 export default {
   name: 'Header',
   props: {
+  },
+  methods: {
+    setData(month) {
+      this.$root.$emit('changeData', `data/${month}.json`);
+      this.displayMonth(month);
+    },
+    displayMonth(month) {
+      const monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ];
+
+      const year = month.substring(0, 4);
+      const monthNum = month.substring(4, 6);
+      const text = `${monthNames[monthNum - 1]} ${year}`;
+
+      $('#activeMonth').text(text);
+    },
   },
 };
 

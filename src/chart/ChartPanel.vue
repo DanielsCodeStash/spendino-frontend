@@ -15,28 +15,12 @@ const d3plus = window.d3plus;
 export default {
   name: 'ChartPanel',
   mounted() {
+    this.$root.$on('changeData', (dataFile) => {
+      console.log(dataFile);
+      app.changeData(dataFile);
+    });
+
     console.log('running mounted');
-    $('#forwardButton1').click(() => {
-      console.log('running 1');
-      app.changeData('data/201912.json');
-    });
-
-    $('#forwardButton2').click(() => {
-      console.log('running 2');
-      app.changeData('data/201911.json');
-    });
-
-    $('#forwardButton3').click(() => {
-      console.log('running 3');
-      app.changeData('data/201910.json');
-    });
-
-    $('#forwardButton4').click(() => {
-      console.log('running 4');
-      app.changeData('data/201909.json');
-    });
-
-    app.displayMonth('data/201909.json');
 
     $.getJSON('data/201909.json', (json) => {
       app.treemap = new d3plus.Treemap()
@@ -56,7 +40,6 @@ export default {
 console.log('running js setup');
 
 app.changeData = (datapath) => {
-  app.displayMonth(datapath);
   app.treemap.data(datapath);
   app.treemap.render();
 };
@@ -88,39 +71,6 @@ window.addEventListener('load', () => {
 window.addEventListener('resize', () => {
   app.resizeChart();
 });
-
-app.displayMonth = (datapath) => {
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
-
-  const prefixLength = 'data/'.length;
-  const yearLength = 4;
-  const monthLength = 2;
-
-  const year = datapath.substring(prefixLength, prefixLength + yearLength);
-  const month = datapath.substring(
-    prefixLength + yearLength,
-    prefixLength + yearLength + monthLength,
-  );
-
-  const text = `${monthNames[month - 1]} ${year}`;
-
-  $('#activeMonth').text(text);
-
-  console.log('done with js');
-};
 
 </script>
 
