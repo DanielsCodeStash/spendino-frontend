@@ -1,6 +1,7 @@
 <template>
 
   <div id="topPanel">
+        <div id="forwardButton1" v-on:click="setData('2020', '01')" class="topPanelSquare">-</div>
         <div id="forwardButton1" v-on:click="setData('2019', '12')" class="topPanelSquare">-</div>
         <div id="forwardButton2" v-on:click="setData('2019', '11')" class="topPanelSquare">-</div>
         <div id="forwardButton3" v-on:click="setData('2019', '10')" class="topPanelSquare">-</div>
