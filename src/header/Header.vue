@@ -15,20 +15,20 @@
 export default {
   name: 'Header',
   mounted() {
-    this.$root.$on('changeData', (year, month) => {
-      this.year = year;
-      this.month = month;
+    this.$root.$on('changeData', (date) => {
+      this.year = date.year;
+      this.month = date.month;
     });
   },
   data() {
     return {
-      year: '1990',
-      month: '10',
+      year: '',
+      month: '',
     };
   },
   methods: {
     setData(year, month) {
-      this.$root.$emit('changeData', year, month);
+      this.$root.$emit('changeData', { year, month });
       this.year = year;
       this.month = month;
     },

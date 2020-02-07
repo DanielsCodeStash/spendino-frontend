@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import shared from '../shared';
 
 const d3plus = window.d3plus;
 
@@ -22,9 +23,8 @@ export default {
     };
   },
   mounted() {
-    this.$root.$on('changeData', (year, month) => {
-      console.log(`${year}-${month}`);
-      this.changeData(year, month);
+    this.$root.$on('changeData', (date) => {
+      this.changeData(date);
     });
     this.initTreemap();
     this.onResize();
@@ -36,8 +36,9 @@ export default {
         .select('#graphPanel')
         .sum('value');
     },
-    changeData(year, month) {
-      const filename = `data/${year}${month}.json`;
+    changeData(date) {
+      const filename = shared.toJsonFilename(date);
+      console.log(`filename ${filename}`);
       this.treemap.data(filename);
       this.treemap.render();
     },
