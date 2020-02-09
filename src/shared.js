@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
   addMonth(date) {
     if (date.month === 12) {
@@ -11,6 +13,7 @@ export default {
       month: date.month + 1,
     };
   },
+
   subtractMonth(date) {
     if (date.month === 1) {
       return {
@@ -23,6 +26,7 @@ export default {
       month: date.month - 1,
     };
   },
+
   toJsonFilename(date) {
     let month;
     if (date.month.toString().length === 1) {
@@ -31,5 +35,18 @@ export default {
       month = date.month;
     }
     return `data/${date.year}${month}.json`;
+  },
+
+  dataExistsCheck(date, onResponse) {
+    const filename = this.toJsonFilename(date);
+
+    axios
+      .get(filename)
+      .then(() => {
+        onResponse(true);
+      })
+      .catch(() => {
+        onResponse(false);
+      });
   },
 };
