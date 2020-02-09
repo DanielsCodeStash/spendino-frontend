@@ -1,9 +1,9 @@
 <template>
 
   <div id="topPanel">
-        <div id="forwardButton1" v-on:click="showLaterData()" v-bind:class="{ active: laterDataExists }" class="topPanelSquare">&#60;</div>
-        <div id="forwardButton2" v-on:click="showEarlierData()" v-bind:class="{ active: earlierDataExists }" class="topPanelSquare">&#62;</div>
-        <div id="activeMonth" class="topPanelSquare active">{{ displayDate }}</div>
+        <div v-on:click="showLaterData()" v-bind:class="{ active: laterDataExists }" class="topPanelSquare">&#60;</div>
+        <div v-on:click="showEarlierData()" v-bind:class="{ active: earlierDataExists }" class="topPanelSquare">&#62;</div>
+        <div class="topPanelSquare active">{{ displayDate }}</div>
   </div>
 </template>
 
@@ -13,42 +13,36 @@ import shared from '../shared';
 export default {
   name: 'Header',
   mounted() {
-    this.$root.$on('changeData', (date) => {
-      this.year = date.year;
-      this.month = date.month;
-
-      const laterDataDate = shared.addMonth({ year: this.year, month: this.month });
-      shared.dataExistsCheck(laterDataDate, (exists) => { this.laterDataExists = exists; });
-
-      const earlierDataDate = shared.subtractMonth({ year: this.year, month: this.month });
-      shared.dataExistsCheck(earlierDataDate, (exists) => { this.earlierDataExists = exists; });
-    });
+    this.$root.$on('changeData', (date) => { this.date = date; });
   },
   data() {
     return {
-      year: '',
-      month: '',
+      date: { year: '', month: '' },
       earlierDataExists: false,
       laterDataExists: false,
     };
   },
   methods: {
     showLaterData() {
-      const newDate = shared.addMonth({ year: this.year, month: this.month });
-      this.year = newDate.year;
-      this.month = newDate.month;
-      this.$root.$emit('changeData', { year: this.year, month: this.month });
+      this.date = shared.addMonth(this.date);
+      this.$root.$emit('changeData', this.date);
     },
     showEarlierData() {
-      const newDate = shared.subtractMonth({ year: this.year, month: this.month });
-      this.year = newDate.year;
-      this.month = newDate.month;
-      this.$root.$emit('changeData', { year: this.year, month: this.month });
+      this.date = shared.subtractMonth(this.date);
+      this.$root.$emit('changeData', this.date);
+    },
+  },
+  watch: {
+    date: {
+      handler(newDate) {
+        shared.dataExistsCheck(shared.addMonth(newDate), (exists) => { this.laterDataExists = exists; });
+        shared.dataExistsCheck(shared.subtractMonth(newDate), (exists) => { this.earlierDataExists = exists; });
+      },
     },
   },
   computed: {
     displayDate() {
-      if (!this.year || !this.month) {
+      if (!this.date.year || !this.date.month) {
         return '';
       }
 
@@ -67,13 +61,12 @@ export default {
         'December',
       ];
 
-      return `${monthNames[this.month - 1]} ${this.year}`;
+      return `${monthNames[this.date.month - 1]} ${this.date.year}`;
     },
   },
 };
 
 </script>
-
 
 <style scoped>
 
