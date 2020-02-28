@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+    <!--- <button @click="test()">hej</button> --->
     <Header />
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <ChartPanel />
+
+    <keep-alive>
+      <component v-bind:is="mainComponent"></component>
+    </keep-alive>
+
   </div>
 </template>
 
@@ -11,6 +14,7 @@
 import axios from 'axios';
 import Header from './header/Header.vue';
 import ChartPanel from './chart/ChartPanel.vue';
+import HelloWorld from './chart/HelloWorld.vue';
 import shared from './shared';
 
 export default {
@@ -18,6 +22,7 @@ export default {
   components: {
     Header,
     ChartPanel,
+    HelloWorld,
   },
   mounted() {
     this.$nextTick(() => {
@@ -34,8 +39,19 @@ export default {
       });
     });
   },
-
+  data() {
+    return {
+      mainComponent: 'ChartPanel',
+    };
+  },
   methods: {
+    test() {
+      if (this.mainComponent === 'ChartPanel') {
+        this.mainComponent = 'HelloWorld';
+      } else {
+        this.mainComponent = 'ChartPanel';
+      }
+    },
     initialDateExploration(date, count, onSuccess) {
       const filename = shared.toJsonFilename(date);
       console.log(`Checking if ${JSON.stringify(date)} has data ${count} - ${filename}`);
