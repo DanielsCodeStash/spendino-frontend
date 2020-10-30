@@ -16,6 +16,7 @@ module.exports = {
     'import/no-named-as-default': 'off',
     'max-len': 'off',
     'linebreak-style': 'off',
+    'no-trailing-spaces': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint',

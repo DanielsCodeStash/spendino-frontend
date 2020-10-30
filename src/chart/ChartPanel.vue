@@ -11,17 +11,21 @@ const d3plus = window.d3plus;
 
 export default {
   name: 'ChartPanel',
+  
   created() {
     window.addEventListener('resize', this.onResize);
   },
+
   destroyed() {
     window.removeEventListener('resize', this.onResize);
   },
+
   data() {
     return {
       treemap: new d3plus.Treemap(),
     };
   },
+
   mounted() {
     this.$root.$on('changeData', (date) => {
       this.changeData(date);
@@ -29,6 +33,7 @@ export default {
     this.initTreemap();
     this.onResize();
   },
+
   methods: {
     initTreemap() {
       this.treemap
@@ -36,12 +41,14 @@ export default {
         .select('#graphPanel')
         .sum('value');
     },
+
     changeData(date) {
       const filename = shared.toJsonFilename(date);
       console.log(`filename ${filename}`);
       this.treemap.data(filename);
       this.treemap.render();
     },
+    
     onResize() {
       const w = window.innerWidth;
       const h = window.innerHeight;
@@ -62,6 +69,7 @@ export default {
       }
     },
   },
+
   props: {
   },
 };

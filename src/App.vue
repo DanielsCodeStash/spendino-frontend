@@ -24,13 +24,14 @@ export default {
     ChartPanel,
     HelloWorld,
   },
+
   mounted() {
     this.$nextTick(() => {
       console.log('Finished rendering the complete view');
 
       const date = {
         year: new Date().getFullYear(),
-        month: new Date().getMonth(),
+        month: new Date().getMonth() + 1,
       };
 
       this.initialDateExploration(date, 1, (dateWithData) => {
@@ -39,11 +40,13 @@ export default {
       });
     });
   },
+
   data() {
     return {
       mainComponent: 'ChartPanel',
     };
   },
+  
   methods: {
     test() {
       if (this.mainComponent === 'ChartPanel') {

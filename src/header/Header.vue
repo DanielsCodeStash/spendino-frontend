@@ -1,8 +1,8 @@
 <template>
 
   <div id="topPanel">
-        <div v-on:click="showLaterData()" v-bind:class="{ active: laterDataExists }" class="topPanelSquare">&#60;</div>
-        <div v-on:click="showEarlierData()" v-bind:class="{ active: earlierDataExists }" class="topPanelSquare">&#62;</div>
+        <div v-on:click="showEarlierData()" v-bind:class="{ active: earlierDataExists }" class="topPanelSquare">&#60;</div>
+        <div v-on:click="showLaterData()" v-bind:class="{ active: laterDataExists }" class="topPanelSquare">&#62;</div>
         <div class="topPanelSquare active">{{ displayDate }}</div>
   </div>
 </template>
@@ -12,9 +12,11 @@ import shared from '../shared';
 
 export default {
   name: 'Header',
+
   mounted() {
     this.$root.$on('changeData', (date) => { this.date = date; });
   },
+
   data() {
     return {
       date: { year: '', month: '' },
@@ -22,6 +24,7 @@ export default {
       laterDataExists: false,
     };
   },
+
   methods: {
     showLaterData() {
       this.date = shared.addMonth(this.date);
@@ -32,6 +35,7 @@ export default {
       this.$root.$emit('changeData', this.date);
     },
   },
+
   watch: {
     date: {
       handler(newDate) {
@@ -40,6 +44,7 @@ export default {
       },
     },
   },
+  
   computed: {
     displayDate() {
       if (!this.date.year || !this.date.month) {
