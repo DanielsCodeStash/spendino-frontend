@@ -38,7 +38,17 @@ export default {
     initTreemap() {
       this.treemap
         .groupBy(['g1', 'g2'])
+        .loadingMessage(false)
         .select('#graphPanel')
+        .tooltipConfig({
+          body: (d, f) => {
+            const title = Array.isArray(d.g2) ? d.g1 : d.g2;
+            let table = `<b>${title}</b><br/>`;
+            table += shared.formatMoney(d.value);
+            return table;
+          },
+          title: d => d.id,
+        })
         .sum('value');
     },
 

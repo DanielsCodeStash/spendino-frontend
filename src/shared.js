@@ -37,6 +37,10 @@ export default {
     return `data/${date.year}${month}.json`;
   },
 
+  formatMoney(amount) {
+    return `${amount.toLocaleString('se')} kr`;
+  },
+
   dataExistsCheck(date, onResponse) {
     const filename = this.toJsonFilename(date);
 

@@ -3,7 +3,7 @@
   <div id="topPanel">
         <div v-on:click="showEarlierData()" v-bind:class="{ active: earlierDataExists }" class="topPanelSquare">&#60;</div>
         <div v-on:click="showLaterData()" v-bind:class="{ active: laterDataExists }" class="topPanelSquare">&#62;</div>
-        <div class="topPanelSquare active">{{ displayDate }}</div>
+        <div v-on:click="showDetails()" class="topPanelSquare active">{{ displayDate }}</div>
   </div>
 </template>
 
@@ -33,6 +33,9 @@ export default {
     showEarlierData() {
       this.date = shared.subtractMonth(this.date);
       this.$root.$emit('changeData', this.date);
+    },
+    showDetails() {
+      this.$root.$emit('test');
     },
   },
 

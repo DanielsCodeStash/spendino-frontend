@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!--- <button @click="test()">hej</button> --->
     <Header />
 
     <keep-alive>
@@ -38,6 +37,10 @@ export default {
         console.log(`${JSON.stringify(dateWithData)} has data`);
         this.$root.$emit('changeData', dateWithData);
       });
+    });
+
+    this.$root.$on('test', () => {
+      this.test();
     });
   },
 
