@@ -15,6 +15,7 @@ import Header from './header/Header.vue';
 import ChartPanel from './chart/ChartPanel.vue';
 import HelloWorld from './chart/HelloWorld.vue';
 import shared from './shared';
+import datastore from './datastore';
 
 export default {
   name: 'app',
@@ -32,6 +33,8 @@ export default {
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
       };
+
+      datastore.initDatastore(date);
 
       this.initialDateExploration(date, 1, (dateWithData) => {
         console.log(`${JSON.stringify(dateWithData)} has data`);

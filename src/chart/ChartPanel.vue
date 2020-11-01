@@ -48,6 +48,10 @@ export default {
             return table;
           },
           title: d => d.id,
+        })        
+        .on('click', (data) => {
+          console.log(`data for shape clicked: ${JSON.stringify(data)}`);
+          this.$root.$emit('test', data);
         })
         .sum('value');
     },
