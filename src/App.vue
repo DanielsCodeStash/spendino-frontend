@@ -3,7 +3,7 @@
     <Header />
 
     <keep-alive>
-      <component v-bind:is="mainComponent"></component>
+      <component v-bind:is="mainComponent" v-bind="currentProperties"></component>
     </keep-alive>
 
   </div>
@@ -51,6 +51,15 @@ export default {
     return {
       mainComponent: 'ChartPanel',
     };
+  },
+
+  computed: {
+    currentProperties() {
+      if (this.mainComponent === 'HelloWorld') {
+        return { foo: 'barYo' };
+      } 
+      return {};
+    },
   },
   
   methods: {

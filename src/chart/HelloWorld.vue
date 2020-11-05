@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <span>foo {{foo}}</span>
     <div class="topPanelSquare active"><span v-html="text"></span></div>
   </div>
 </template>
@@ -12,8 +13,16 @@ import datastore from '../datastore';
 export default {
   name: 'HelloWorld',
 
+  props: {
+    foo: String,
+  },
+
   mounted() {
     this.$root.$on('test', (data) => {
+      if (!data) {
+        return;
+      }
+
       console.log(`hej ${JSON.stringify(data)}`);
 
       const d = datastore.getHistoricalDataForSubcategory(data.g2);
