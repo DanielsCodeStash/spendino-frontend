@@ -13,7 +13,7 @@
 import axios from 'axios';
 import Header from './header/Header.vue';
 import ChartPanel from './chart/ChartPanel.vue';
-import HelloWorld from './chart/HelloWorld.vue';
+import Category from './chart/Category.vue';
 import shared from './shared';
 import datastore from './datastore';
 
@@ -21,8 +21,8 @@ export default {
   name: 'app',
   components: {
     Header,
+    Category,
     ChartPanel,
-    HelloWorld,
   },
 
   mounted() {
@@ -34,38 +34,44 @@ export default {
         month: new Date().getMonth() + 1,
       };
 
-      datastore.initDatastore(date);
-
+      // TODO: make datastore responsible for finding first date with data 
+      // and then setup data function
       this.initialDateExploration(date, 1, (dateWithData) => {
-        console.log(`${JSON.stringify(dateWithData)} has data`);
+        datastore.initDatastore(dateWithData);
         this.$root.$emit('changeData', dateWithData);
       });
     });
 
-    this.$root.$on('test', () => {
-      this.test();
+    this.$root.$on('categorySelected', (category) => {
+      this.selectedCategory = category;
+      this.toggleCategoryPanel();
     });
+
+    this.$root.$on('returnToChart', () => {
+      this.toggleCategoryPanel();
+    });    
   },
 
   data() {
     return {
       mainComponent: 'ChartPanel',
+      selectedCategory: '',
     };
   },
 
   computed: {
     currentProperties() {
-      if (this.mainComponent === 'HelloWorld') {
-        return { foo: 'barYo' };
+      if (this.mainComponent === 'Category') {
+        return { selectedCategory: this.selectedCategory };
       } 
       return {};
     },
   },
   
   methods: {
-    test() {
+    toggleCategoryPanel() {
       if (this.mainComponent === 'ChartPanel') {
-        this.mainComponent = 'HelloWorld';
+        this.mainComponent = 'Category';
       } else {
         this.mainComponent = 'ChartPanel';
       }
@@ -98,5 +104,14 @@ body {
   border: 0;
   padding: 0;
   margin: 0;
+}
+
+html, 
+body {
+    height: 100%;
+}
+
+#app {
+  height: 100%;
 }
 </style>

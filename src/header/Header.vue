@@ -1,9 +1,14 @@
 <template>
 
   <div id="topPanel">
+    <template v-if='inCategoryViewMode'>
+      <div id="backButton" v-on:click="backToChartPanel()" class="topPanelSquare">&larr;</div>
+    </template>
+    <template v-else>
         <div v-on:click="showEarlierData()" v-bind:class="{ active: earlierDataExists }" class="topPanelSquare">&#60;</div>
         <div v-on:click="showLaterData()" v-bind:class="{ active: laterDataExists }" class="topPanelSquare">&#62;</div>
-        <div v-on:click="showDetails()" class="topPanelSquare active">{{ displayDate }}</div>
+    </template>
+    <div class="topPanelSquare psudoActive">{{ displayDate }}</div>
   </div>
 </template>
 
@@ -15,10 +20,12 @@ export default {
 
   mounted() {
     this.$root.$on('changeData', (date) => { this.date = date; });
+    this.$root.$on('categorySelected', () => { this.inCategoryViewMode = true; });
   },
 
   data() {
     return {
+      inCategoryViewMode: false,
       date: { year: '', month: '' },
       earlierDataExists: false,
       laterDataExists: false,
@@ -34,8 +41,9 @@ export default {
       this.date = shared.subtractMonth(this.date);
       this.$root.$emit('changeData', this.date);
     },
-    showDetails() {
-      this.$root.$emit('test');
+    backToChartPanel() {
+      this.inCategoryViewMode = false;
+      this.$root.$emit('returnToChart');
     },
   },
 
@@ -78,13 +86,39 @@ export default {
 
 <style scoped>
 
+#backButton {
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 10px;
+    float: left;
+
+    font-family: verdana;
+    text-align: center;
+    font-size: 35px;
+    background-color: rgba(252, 201, 201, 0.664);
+    border-radius: 3px;
+    color: rgb(99, 99, 99);
+}
+
+#backButton:hover {
+    background-color: rgb(194, 69, 69);
+    cursor: pointer;
+}
+
 #topPanel {
     height: 60px;
     padding-left: 12px;
     color: rgba(228, 228, 228, 0.541);
+    overflow: hidden;
 }
 
 .active {
+    color: rgb(0, 152, 212);
+}
+
+.psudoActive {
     color: rgb(0, 152, 212);
 }
 
@@ -101,7 +135,7 @@ export default {
     background-color: rgb(84, 84, 84);
 }
 
-.topPanelSquare:hover {
+.active:hover {
     background-color: rgb(59, 59, 59);
     cursor: pointer;
 }

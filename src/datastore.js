@@ -5,13 +5,15 @@ export default {
 
     initDatastore(initDate) {
         this.initDate = initDate;
+        console.log(`initiation datastore at ${initDate.year}-${initDate.month}`);
+        
         const datesBackCache = 24;
 
         this.data = {};
         let activeDate = initDate;
         let i = 0;
         do {
-            console.log(activeDate);
+            // console.log(activeDate);
 
             this.fetchMonthData(activeDate);
 
@@ -41,10 +43,10 @@ export default {
         let i = 0;
         const returnData = [];
         let activeDate = this.initDate;
-        console.log(this);
-        console.log(`b: ${activeDate}`);
+        // console.log(this);
+        // console.log(`b: ${activeDate}`);
         do {
-            console.log(activeDate);
+            // console.log(activeDate);
 
             const data = this.getCategoryData(activeDate, category);
             returnData.push(data);

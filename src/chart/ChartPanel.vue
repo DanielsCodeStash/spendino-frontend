@@ -7,6 +7,7 @@
 <script>
 import shared from '../shared';
 
+const $ = window.$;
 const d3plus = window.d3plus;
 
 export default {
@@ -51,7 +52,8 @@ export default {
         })        
         .on('click', (data) => {
           console.log(`data for shape clicked: ${JSON.stringify(data)}`);
-          this.$root.$emit('test', data);
+          $('.d3plus-tooltip').remove();
+          this.$root.$emit('categorySelected', data);
         })
         .sum('value');
     },
@@ -66,14 +68,6 @@ export default {
     onResize() {
       const w = window.innerWidth;
       const h = window.innerHeight;
-
-      document
-        .getElementById('topPanel')
-        .setAttribute('style', 'height: 60 + px');
-
-      document
-        .getElementById('mainPanel')
-        .setAttribute('style', 'padding-left: 10px');
 
       if (this.treemap) {
         this.treemap.width(w - 20);
@@ -91,6 +85,14 @@ export default {
 </script>
 
 <style scoped>
+
+#topPanel {
+  height: 60px;
+}
+
+#mainPanel {
+  padding-left: 10px;
+}
 
 #graphPanel {
  width: 100%;
