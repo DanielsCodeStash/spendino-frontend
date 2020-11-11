@@ -13,7 +13,7 @@
 import axios from 'axios';
 import Header from './header/Header.vue';
 import ChartPanel from './chart/ChartPanel.vue';
-import Category from './chart/Category.vue';
+import CategoryPanel from './chart/CategoryPanel.vue';
 import shared from './shared';
 import datastore from './datastore';
 
@@ -21,7 +21,7 @@ export default {
   name: 'app',
   components: {
     Header,
-    Category,
+    CategoryPanel,
     ChartPanel,
   },
 
@@ -61,7 +61,7 @@ export default {
 
   computed: {
     currentProperties() {
-      if (this.mainComponent === 'Category') {
+      if (this.mainComponent === 'CategoryPanel') {
         return { selectedCategory: this.selectedCategory };
       } 
       return {};
@@ -71,7 +71,7 @@ export default {
   methods: {
     toggleCategoryPanel() {
       if (this.mainComponent === 'ChartPanel') {
-        this.mainComponent = 'Category';
+        this.mainComponent = 'CategoryPanel';
       } else {
         this.mainComponent = 'ChartPanel';
       }

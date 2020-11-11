@@ -13,8 +13,6 @@ export default {
         let activeDate = initDate;
         let i = 0;
         do {
-            // console.log(activeDate);
-
             this.fetchMonthData(activeDate);
 
             activeDate = shared.subtractMonth(activeDate);
@@ -35,7 +33,6 @@ export default {
 
     handleResponse(response, dataStore, activeDate) {
         dataStore.data[`${activeDate.year}${activeDate.month}`] = response.data;
-        console.log(dataStore.data);
     },
 
     getHistoricalDataForSubcategory(category) {
@@ -43,10 +40,7 @@ export default {
         let i = 0;
         const returnData = [];
         let activeDate = this.initDate;
-        // console.log(this);
-        // console.log(`b: ${activeDate}`);
         do {
-            // console.log(activeDate);
 
             const data = this.getCategoryData(activeDate, category);
             returnData.push(data);

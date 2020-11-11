@@ -27,6 +27,21 @@ export default {
     };
   },
 
+  is_touch_device() {
+    if ('ontouchstart' in window || window.TouchEvent) {
+        return true;
+    }
+
+    if (window.DocumentTouch && document instanceof DocumentTouch) {
+        return true;
+    }
+
+    const prefixes = ['', '-webkit-', '-moz-', '-o-', '-ms-'];
+    const queries = prefixes.map(prefix => `(${prefix}touch-enabled)`);
+
+    return window.matchMedia(queries.join(',')).matches;
+  },
+
   toJsonFilename(date) {
     let month;
     if (date.month.toString().length === 1) {

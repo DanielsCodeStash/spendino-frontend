@@ -35,6 +35,14 @@ export default {
     this.onResize();
   },
 
+  activated() {
+    if (this.treemap && shared.is_touch_device()) {
+      console.log('rerendering');
+      // maybe only on mobile? Because category is still selected
+      this.treemap.render();
+    }
+  },
+
   methods: {
     initTreemap() {
       this.treemap
@@ -51,9 +59,11 @@ export default {
           title: d => d.id,
         })        
         .on('click', (data) => {
+          // https://github.com/d3/d3-selection#selection_on
           console.log(`data for shape clicked: ${JSON.stringify(data)}`);
           $('.d3plus-tooltip').remove();
           this.$root.$emit('categorySelected', data);
+          
         })
         .sum('value');
     },

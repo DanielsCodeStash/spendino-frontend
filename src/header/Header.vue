@@ -77,7 +77,13 @@ export default {
         'December',
       ];
 
-      return `${monthNames[this.date.month - 1]} ${this.date.year}`;
+      if (!this.inCategoryViewMode) {
+        console.log(`${monthNames[this.date.month - 1]} ${this.date.year}`);
+        return `${monthNames[this.date.month - 1]} ${this.date.year}`;
+      }
+
+      const monthName = monthNames[this.date.month - 1].substring(0, 3);
+      return `${monthName} ${this.date.year - 2} - ${this.date.year}`;
     },
   },
 };
