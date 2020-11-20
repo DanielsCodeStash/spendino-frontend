@@ -20,12 +20,16 @@ export default {
 
   mounted() {
     this.$root.$on('changeData', (date) => { this.date = date; });
-    this.$root.$on('categorySelected', () => { this.inCategoryViewMode = true; });
+    this.$root.$on('categorySelected', (data) => { 
+      this.category = data.g2;
+      this.inCategoryViewMode = true; 
+    });
   },
 
   data() {
     return {
       inCategoryViewMode: false,
+      category: '',
       date: { year: '', month: '' },
       earlierDataExists: false,
       laterDataExists: false,
@@ -82,8 +86,7 @@ export default {
         return `${monthNames[this.date.month - 1]} ${this.date.year}`;
       }
 
-      const monthName = monthNames[this.date.month - 1].substring(0, 3);
-      return `${monthName} ${this.date.year - 2} - ${this.date.year}`;
+      return `${this.category}`;
     },
   },
 };

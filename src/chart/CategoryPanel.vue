@@ -25,9 +25,13 @@ export default {
       let yMin = Number.MAX_SAFE_INTEGER;
       let yMax = Number.MIN_SAFE_INTEGER;
 
-      categoryData.forEach((e) => {
+      categoryData.reverse().forEach((e) => {
 
-        const moneyAmount = e.v;
+        let moneyAmount = e.v;
+
+        if (moneyAmount === '') {
+          moneyAmount = null; // fromat that highcharts expects
+        }
 
         chartData.push({ x: Date.UTC(e.d.year, e.d.month - 1, 1), y: moneyAmount });
 
@@ -74,9 +78,6 @@ export default {
             style: {
               color: '#303030',
             },
-            formatter() {
-                return shared.formatMoney(this.value);
-            },
           },
           max: yMax,
           min: yMin, 
@@ -85,6 +86,7 @@ export default {
           name: this.selectedCategory.g2,
           data: chartData,
           borderColor: '#303030',
+          showInLegend: false,
           tooltip: {
             valueDecimals: 0,
           },
@@ -98,7 +100,7 @@ export default {
 <style scoped>
 
 #main {
-  padding: 10px;
+  padding: 0 10px 10px 10px;
 }
 
 </style>

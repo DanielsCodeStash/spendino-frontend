@@ -60,7 +60,7 @@ export default {
         })        
         .on('click', (data) => {
           // https://github.com/d3/d3-selection#selection_on
-          console.log(`data for shape clicked: ${JSON.stringify(data)}`);
+          // console.log(`data for shape clicked: ${JSON.stringify(data)}`);
           $('.d3plus-tooltip').remove();
           this.$root.$emit('categorySelected', data);
           

@@ -27,7 +27,7 @@ export default {
             .get(jsonFileName)
             .then(response => this.handleResponse(response, this, date))
             .catch((r) => {
-                console.log(`fail ${r}`);
+                // console.log(`fail ${r}`);
             });
     },
 
