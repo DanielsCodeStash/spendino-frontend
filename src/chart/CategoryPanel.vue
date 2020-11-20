@@ -39,7 +39,7 @@ export default {
 
       yMax *= 1.10;
       yMin *= 0.90;
-      
+
       this.chart = Highcharts.chart('categoryChart', {
         chart: {
           type: 'line',

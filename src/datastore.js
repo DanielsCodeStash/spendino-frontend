@@ -17,7 +17,7 @@ export default {
 
             activeDate = shared.subtractMonth(activeDate);
             i += 1;
-        } while (i < 24);
+        } while (i <= datesBackCache);
     },
 
     fetchMonthData(date) {
@@ -47,7 +47,7 @@ export default {
 
             activeDate = shared.subtractMonth(activeDate);
             i += 1;
-        } while (i < 24);      
+        } while (i <= datesBackCache);      
 
         return returnData;
     },
