@@ -53,7 +53,7 @@ export default {
   },
 
   formatMoney(amount) {
-    return `${amount.toLocaleString('se')} kr`;
+    return `${amount.toLocaleString('sv-SE')} kr`;
   },
 
   dataExistsCheck(date, onResponse) {

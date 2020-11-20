@@ -74,6 +74,9 @@ export default {
             style: {
               color: '#303030',
             },
+            formatter() {
+                return shared.formatMoney(this.value);
+            },
           },
           max: yMax,
           min: yMin, 

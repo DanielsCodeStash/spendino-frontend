@@ -2,11 +2,11 @@
 
   <div id="topPanel">
     <template v-if='inCategoryViewMode'>
-      <div id="backButton" v-on:click="backToChartPanel()" class="topPanelSquare">&larr;</div>
+      <div id="backButton" v-on:click="backToChartPanel()" class="headerButton active">&#60;</div>
     </template>
     <template v-else>
-        <div v-on:click="showEarlierData()" v-bind:class="{ active: earlierDataExists }" class="topPanelSquare">&#60;</div>
-        <div v-on:click="showLaterData()" v-bind:class="{ active: laterDataExists }" class="topPanelSquare">&#62;</div>
+        <div v-on:click="showEarlierData()" v-bind:class="{ active: earlierDataExists }" class="headerButton">&#60;</div>
+        <div v-on:click="showLaterData()" v-bind:class="{ active: laterDataExists }" class="headerButton">&#62;</div>
     </template>
     <div class="topPanelSquare psudoActive">{{ displayDate }}</div>
   </div>
@@ -92,26 +92,40 @@ export default {
 
 <style scoped>
 
-#backButton {
+.headerButton {
+    background-color: #3d3d3d;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: 35px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    border-radius: 3px;
+    line-height: 40px;
+}
+
+.topPanelSquare {
     margin-top: 10px;
     margin-right: 10px;
     padding: 2px;
-    padding-left: 5px;
-    padding-right: 10px;
     float: left;
-
     font-family: verdana;
     text-align: center;
-    font-size: 35px;
-    background-color: rgba(252, 201, 201, 0.664);
-    border-radius: 3px;
-    color: rgb(99, 99, 99);
+    font-size: 30px;
+    background-color: #525252;
 }
 
-#backButton:hover {
-    background-color: rgb(194, 69, 69);
-    cursor: pointer;
+@media (pointer: fine) {
+    .active:hover {
+      background-color: black;
+      cursor: pointer;
+   }
 }
+
 
 #topPanel {
     height: 60px;
@@ -128,21 +142,14 @@ export default {
     color: rgb(0, 152, 212);
 }
 
-.topPanelSquare {
-    margin-top: 10px;
-    margin-right: 10px;
-    padding: 2px;
-    float: left;
-
-
-    font-family: verdana;
-    text-align: center;
-    font-size: 35px;
-    background-color: #525252;
+#topPanel {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
-.active:hover {
-    background-color: rgb(59, 59, 59);
-    cursor: pointer;
-}
 </style>
