@@ -21,13 +21,28 @@ export default {
       const categoryData = datastore.getHistoricalDataForSubcategory(this.selectedCategory.g2);
       
       const chartData = [];
+      
+      let yMin = Number.MAX_SAFE_INTEGER;
+      let yMax = Number.MIN_SAFE_INTEGER;
+
       categoryData.forEach((e) => {
-        chartData.push({ x: Date.UTC(e.d.year, e.d.month - 1, 1), y: e.v });
+
+        const moneyAmount = e.v;
+
+        chartData.push({ x: Date.UTC(e.d.year, e.d.month - 1, 1), y: moneyAmount });
+
+        if (moneyAmount) {
+          if (moneyAmount < yMin) yMin = moneyAmount;
+          if (moneyAmount > yMax) yMax = moneyAmount;
+        }
       });
 
+      yMax *= 1.10;
+      yMin *= 0.90;
+      
       this.chart = Highcharts.chart('categoryChart', {
         chart: {
-          type: 'column',
+          type: 'line',
           backgroundColor: '#919191',                
           marginTop: 25,
         },
@@ -60,6 +75,8 @@ export default {
               color: '#303030',
             },
           },
+          max: yMax,
+          min: yMin, 
         },
         series: [{
           name: this.selectedCategory.g2,
