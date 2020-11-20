@@ -138,7 +138,7 @@ export default {
     font-family: verdana;
     text-align: center;
     font-size: 35px;
-    background-color: rgb(84, 84, 84);
+    background-color: #525252;
 }
 
 .active:hover {
