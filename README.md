@@ -24,6 +24,5 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 TODO:
-- fixa highcharts-warning
 - gå över till att använda datastore för att kolla om nästa/föregående månad
 - history back stöd för att gå tillbaka
